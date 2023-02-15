@@ -29,7 +29,7 @@ Enter the bootloader in 3 ways:
 
 ## OLED instructions
 
-Simple logo upload-
+* **Simple logo upload**
 
 1.create a black and white image that is 128 pixels wide and less than 64 pixels tall in something like MS paint (you can even download from online then just resize the image to 128 pixels) 
 
@@ -39,7 +39,8 @@ Simple logo upload-
 
 4.Save the file,compile using QMK MSYS, then flash to your mochi
 
-Explanation of funtions-
+* **Explanation of funtions**
+
 -For 128x64 OLED the OLED_ROTATION_180 function rotates the images to correct orientation, for 128x32, you can change this to OLED_ROTATION_270 so texts are rotated another 90 degress
 
 -config.h has a line #define OLED_DISPLAY_128X64 that tells QMK that screen is 128x64, and for 128x32 comment this line out by pulling 2 forward slash in front will make everything appear more proportional on the screen (//#define OLED_DISPLAY_128X64)
@@ -48,7 +49,7 @@ Explanation of funtions-
 
 -switch (get_highest_layer(layer_state))   this block of code identifies the layer that is currently active, text used in Case (i.e. case _MAIN) need to match the text in  enum keyboard_layers defined at top of fine40.c, but actual text desplayed can be changed to any thing you want (i.e  oled_write_ln_P(PSTR("MAIN"), false); can be changed to  oled_write_ln_P(PSTR("BASE"), false);). Other status indications are also possibe and will be disucussed below
 
-More Advance Funtions:
+* **More Advance Funtions**
 
 Animating the Logo:
 These are based on code published by pedker (https://github.com/pedker/OLED-BongoCat-Revision) and for demo purpose I am using pedker's bongo cat pictures in fine40.c file 
