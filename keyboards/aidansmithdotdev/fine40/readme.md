@@ -43,7 +43,7 @@ Enter the bootloader in 3 ways:
 
 -For 128x64 OLED the **OLED_ROTATION_180** function rotates the images to correct orientation, for 128x32, you can change this to **OLED_ROTATION_270** so texts are rotated another 90 degress
 
--config.h has a line #define **OLED_DISPLAY_128X64** that tells QMK that screen is 128x64, and for 128x32 comment this line out by pulling 2 forward slash in front will make everything appear more proportional on the screen (**//#define OLED_DISPLAY_128X64**)
+-config.h has a line #define **OLED_DISPLAY_128X64** that tells QMK that screen is 128x64, and for 128x32 comment this line out by putting 2 forward slash in front will make everything appear more proportional on the 128x32 screen (**//#define OLED_DISPLAY_128X64**)
 
 -**oled_write_P(PSTR("  "), false);** writes a line of text on OLED, you can do text **oled_write_P(PSTR("Mochi"), false);**,line **oled_write_P(PSTR("-----"), false);** or empty line **oled_write_P(PSTR("   "), false);**
 
@@ -76,9 +76,9 @@ the picture array can be made 2D using 2 square brackets, the first bracket shou
                 etc,etc
                 };
 
- because it is now a 2 D array, when draw teh image you can sepcify which fram to draw so **oled_write_raw_P(mochi_logo, sizeof(mochi_logo));** need to be changed to **oled_write_raw_P(mochi_logo[current_frame], sizeof(mochi_logo));**  using **current_frame** as a tracker cycle through the images
+ because it is now a 2D array, when draw the image you can specify which frame to draw so **oled_write_raw_P(mochi_logo, sizeof(mochi_logo));** need to be changed to **oled_write_raw_P(mochi_logo[current_frame], sizeof(mochi_logo));**  using **current_frame** as a tracker cycling through the images
  
- if you want animate to move by itself, below code will update the current_idle_frame every x secounds, just put in the render_mochi(void) after the oled_write_raw_P line
+ if you want animate to move by itself, below code will update the current_frame every x secounds, just put in the **render_mochi(void)** after the **oled_write_raw_P** line
  
          if (timer_elapsed32(anim_timer) > ANIM_FRAME_DURATION)
             {
@@ -86,7 +86,7 @@ the picture array can be made 2D using 2 square brackets, the first bracket shou
                 anim_timer = timer_read32();
             }
             
- if you want to animation to change only after you press the key, you can add below code as a new function that will only increase the frame number on key press (fine40 - animated.c currently has this code)
+ if you want to animation to change only after you press the key, you can add below code as a new function that will only increase the frame number on key press (**fine40 - animated.c** currently has this code)
  
          bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
