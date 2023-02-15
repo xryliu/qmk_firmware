@@ -62,12 +62,12 @@ uint8_t current_idle_frame = 0; <-this variable help draw the frames in sequenti
 uint32_t anim_timer = 0; <- and this variable helps track time
 
 the picture array can be made 2D using 2 square brackets, the first bracket should say IDLE_FRAMES which specify number of pictures, secound square spefify the number of pixels in each image, yoiu get this number by multipling the width x height of the image (I am using 128x32 in the demo which equals to 4096)
-mochi_logo[IDLE_FRAMES][4096]= {
-    {hex code for picture 1 },
-    {hex code for picture 2 }
-    etc,etc
-    };
-    
+            mochi_logo[IDLE_FRAMES][4096]= {
+                {hex code for picture 1 },
+                {hex code for picture 2 }
+                etc,etc
+                };
+
  because it is now a 2 D array, when draw teh image you can sepcify which fram to draw so oled_write_raw_P(mochi_logo, sizeof(mochi_logo)); need to be changed to oled_write_raw_P(mochi_logo[current_idle_frame], sizeof(mochi_logo));  using current_idle_frame as a tracker cycle through the images
  
  if you want animate to move by itself, below code will update the current_idle_frame every x secounds, just put in the render_mochi(void) after the oled_write_raw_P line
@@ -80,12 +80,12 @@ mochi_logo[IDLE_FRAMES][4096]= {
             
  if you want to animation to change only after you press the key, you can add below code as a new function that will only increase teh frame number on key press (fine40.c currently has this code)
  
- bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    if (record->event.pressed) {
-      current_idle_frame = (current_idle_frame + 1) % IDLE_FRAMES;
-    }
-    return true;
-  }
+         bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+            if (record->event.pressed) {
+              current_idle_frame = (current_idle_frame + 1) % IDLE_FRAMES;
+            }
+            return true;
+          }
   
   
   
@@ -95,25 +95,25 @@ mochi_logo[IDLE_FRAMES][4096]= {
   
   this code broke will highlight the modifier word that is currenly pressed
   
-  void render_mod_status(uint8_t modifiers) {
-   //    oled_write_ln_P(PSTR("-----"), false);
-    oled_write_ln_P(PSTR("SHFT"), (modifiers & MOD_MASK_SHIFT));
-    oled_write_ln_P(PSTR("ALT"), (modifiers & MOD_MASK_ALT));
-    oled_write_ln_P(PSTR("CTRL"), (modifiers & MOD_MASK_CTRL));
-    oled_write_ln_P(PSTR("GUI"), (modifiers & MOD_MASK_GUI));
-}
+              void render_mod_status(uint8_t modifiers) {
+               //    oled_write_ln_P(PSTR("-----"), false);
+                oled_write_ln_P(PSTR("SHFT"), (modifiers & MOD_MASK_SHIFT));
+                oled_write_ln_P(PSTR("ALT"), (modifiers & MOD_MASK_ALT));
+                oled_write_ln_P(PSTR("CTRL"), (modifiers & MOD_MASK_CTRL));
+                oled_write_ln_P(PSTR("GUI"), (modifiers & MOD_MASK_GUI));
+            }
 
 
 this block of code with highligh a chacter when cap lock, num lock or scroll locked in pressed
 
-void render_keylock_status(led_t led_state) {
- 
-    oled_write_P(PSTR("A"), led_state.num_lock);
- oled_write_P(PSTR("1"), led_state.scroll_lock);
-	
-    oled_write_P(PSTR("@"), led_state.caps_lock);
+            void render_keylock_status(led_t led_state) {
 
-}
+                oled_write_P(PSTR("A"), led_state.num_lock);
+             oled_write_P(PSTR("1"), led_state.scroll_lock);
+
+                oled_write_P(PSTR("@"), led_state.caps_lock);
+
+            }
 
 the ordering you have in oled_task_user(void) function is the order each of the indicators will display, example below, oled_set_cursor(0, X); will force the stats to appear in the line specified (each line take 8 pixels in height so 128x32 and dispay 16 lines total because it is vertical and 128x64 only 8 lines because it is horizontal)
 
