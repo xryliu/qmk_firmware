@@ -55,11 +55,11 @@ Animating the Logo:
 These are based on code published by pedker (https://github.com/pedker/OLED-BongoCat-Revision) and for demo purpose I am using pedker's bongo cat pictures in fine40.c file 
 
 Variables needed: 
-#define IDLE_FRAMES 2 <-this variable indicates the total number of frames in your animation, the more you add the bigger the compiled fiel will be
-uint8_t current_idle_frame = 0; <-this variable help draw the frames in sequential order
+        #define IDLE_FRAMES 2 <-this variable indicates the total number of frames in your animation, the more you add the bigger the compiled fiel will be
+        uint8_t current_idle_frame = 0; <-this variable help draw the frames in sequential order
 
-#define ANIM_FRAME_DURATION 75 <- if you want to run the animation automatically this variable defines how fast in milisecounds the the pictures changes 
-uint32_t anim_timer = 0; <- and this variable helps track time
+        #define ANIM_FRAME_DURATION 75 <- if you want to run the animation automatically this variable defines how fast in milisecounds the the pictures changes 
+        uint32_t anim_timer = 0; <- and this variable helps track time
 
 the picture array can be made 2D using 2 square brackets, the first bracket should say IDLE_FRAMES which specify number of pictures, secound square spefify the number of pixels in each image, yoiu get this number by multipling the width x height of the image (I am using 128x32 in the demo which equals to 4096)
             mochi_logo[IDLE_FRAMES][4096]= {
