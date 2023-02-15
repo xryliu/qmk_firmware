@@ -56,9 +56,9 @@ These are based on code published by pedker (https://github.com/pedker/OLED-Bong
 
 Variables needed: 
 
-        #define IDLE_FRAMES 2 <-this variable indicates the total number of frames in your animation, the more you add the bigger the compiled fiel will be
+        #define TTL_FRAMES 2 <-this variable indicates the total number of frames in your animation, the more you add the bigger the compiled fiel will be
         
-        uint8_t current_idle_frame = 0; <-this variable help draw the frames in sequential order
+        uint8_t current_frame = 0; <-this variable help draw the frames in sequential order
 
         #define ANIM_FRAME_DURATION 75 <- if you want to run the animation automatically this variable defines how fast in milisecounds the the pictures changes 
         
@@ -66,7 +66,7 @@ Variables needed:
 
 the picture array can be made 2D using 2 square brackets, the first bracket should say IDLE_FRAMES which specify number of pictures, secound square spefify the number of pixels in each image, yoiu get this number by multipling the width x height of the image (I am using 128x32 in the demo which equals to 4096)
          
-         mochi_logo[IDLE_FRAMES][4096]= {
+         mochi_logo[TTL_FRAMES][4096]= {
                 {hex code for picture 1 },
                 {hex code for picture 2 }
                 etc,etc
@@ -78,15 +78,15 @@ the picture array can be made 2D using 2 square brackets, the first bracket shou
  
          if (timer_elapsed32(anim_timer) > ANIM_FRAME_DURATION)
             {
-                current_idle_frame = (current_idle_frame + 1) % IDLE_FRAMES;
+                current_frame = (current_frame + 1) % IDLE_FRAMES;
                 anim_timer = timer_read32();
             }
             
- if you want to animation to change only after you press the key, you can add below code as a new function that will only increase teh frame number on key press (fine40.c currently has this code)
+ if you want to animation to change only after you press the key, you can add below code as a new function that will only increase the frame number on key press (fine40 - animated.c currently has this code)
  
          bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
-              current_idle_frame = (current_idle_frame + 1) % IDLE_FRAMES;
+              current_frame = (current_frame + 1) % TTL_FRAMES;
             }
             return true;
           }
