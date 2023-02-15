@@ -31,28 +31,32 @@ Enter the bootloader in 3 ways:
 
 * **Simple logo upload**
 
-1.create a black and white image that is 128 pixels wide and less than 64 pixels tall in something like MS paint (you can even download from online then just resize the image to 128 pixels) 
+1.create a black and white image that is 128 pixels wide and less than 64 pixels tall in something like MS paint (white logo on black background looks best) 
 
 2.Go to https://joric.github.io/qle/ then use upload image funtion and it will generate hex code for each pixel to show new image in OLED
 
-3.Open fine40.c and replace the hex code in static const char PROGMEM mochi_logo[] = {... } with new ones from previous step
+3.Open fine40.c and replace the hex code in **static const char PROGMEM mochi_logo[] = {... }** with new ones from previous step
 
 4.Save the file,compile using QMK MSYS, then flash to your mochi
 
 * **Explanation of funtions**
 
--For 128x64 OLED the OLED_ROTATION_180 function rotates the images to correct orientation, for 128x32, you can change this to OLED_ROTATION_270 so texts are rotated another 90 degress
+-For 128x64 OLED the **OLED_ROTATION_180** function rotates the images to correct orientation, for 128x32, you can change this to **OLED_ROTATION_270** so texts are rotated another 90 degress
 
--config.h has a line #define OLED_DISPLAY_128X64 that tells QMK that screen is 128x64, and for 128x32 comment this line out by pulling 2 forward slash in front will make everything appear more proportional on the screen (//#define OLED_DISPLAY_128X64)
+-config.h has a line #define **OLED_DISPLAY_128X64** that tells QMK that screen is 128x64, and for 128x32 comment this line out by pulling 2 forward slash in front will make everything appear more proportional on the screen (**//#define OLED_DISPLAY_128X64**)
 
--PROGMEM mochi_logo[] is a arrary that stores the image at pixel level, and for animations you need to make this a 2D array to store multiple picture (will be discussed in more detail in the Advanded functions below)
+-**oled_write_P(PSTR("  "), false);** writes a line of text on OLED, you can do text **oled_write_P(PSTR("Mochi"), false);**,line **oled_write_P(PSTR("-----"), false);** or empty line **oled_write_P(PSTR("   "), false);**
 
--switch (get_highest_layer(layer_state))   this block of code identifies the layer that is currently active, text used in Case (i.e. case _MAIN) need to match the text in  enum keyboard_layers defined at top of fine40.c, but actual text desplayed can be changed to any thing you want (i.e  oled_write_ln_P(PSTR("MAIN"), false); can be changed to  oled_write_ln_P(PSTR("BASE"), false);). Other status indications are also possibe and will be disucussed below
+
+-**PROGMEM mochi_logo[]** is a arrary that stores the image at pixel level, and for animations you need to make this a 2D array to store multiple picture (will be discussed in more detail in the Advanded functions below)
+
+-**switch (get_highest_layer(layer_state))**  this block of code identifies the layer that is currently active, text used in Case (i.e. **case _MAIN**) need to match the text in  **enum keyboard_layers** defined at top of fine40.c, but actual text desplayed can be changed to any thing you want (i.e  **oled_write_ln_P(PSTR("MAIN"), false);** can be changed to  **oled_write_ln_P(PSTR("BASE"), false);**). Other status indications are also possibe and will be disucussed below
 
 * **More Advance Funtions**
 
-Animating the Logo:
-These are based on code published by pedker (https://github.com/pedker/OLED-BongoCat-Revision) and for demo purpose I am using pedker's bongo cat pictures in fine40 - animated.c file 
+**Animating the Logo:**
+
+These are based on code published by pedker (https://github.com/pedker/OLED-BongoCat-Revision) and for demo purpose I am using pedker's bongo cat pictures in **fine40 - animated.c** file 
 
 Variables needed: 
 
@@ -64,7 +68,7 @@ Variables needed:
         
         uint32_t anim_timer = 0; <- and this variable helps track time
 
-the picture array can be made 2D using 2 square brackets, the first bracket should say IDLE_FRAMES which specify number of pictures, secound square spefify the number of pixels in each image, yoiu get this number by multipling the width x height of the image (I am using 128x32 in the demo which equals to 4096)
+the picture array can be made 2D using 2 square brackets, the first bracket should say TTL_FRAMES which specify number of pictures, secound square spefify the number of pixels in each image, yoiu get this number by multipling the width x height of the image (I am using 128x32 in the demo which equals to 4096)
          
          mochi_logo[TTL_FRAMES][4096]= {
                 {hex code for picture 1 },
@@ -72,7 +76,7 @@ the picture array can be made 2D using 2 square brackets, the first bracket shou
                 etc,etc
                 };
 
- because it is now a 2 D array, when draw teh image you can sepcify which fram to draw so oled_write_raw_P(mochi_logo, sizeof(mochi_logo)); need to be changed to oled_write_raw_P(mochi_logo[current_idle_frame], sizeof(mochi_logo));  using current_idle_frame as a tracker cycle through the images
+ because it is now a 2 D array, when draw teh image you can sepcify which fram to draw so **oled_write_raw_P(mochi_logo, sizeof(mochi_logo));** need to be changed to **oled_write_raw_P(mochi_logo[current_frame], sizeof(mochi_logo));**  using **current_frame** as a tracker cycle through the images
  
  if you want animate to move by itself, below code will update the current_idle_frame every x secounds, just put in the render_mochi(void) after the oled_write_raw_P line
  
@@ -93,11 +97,11 @@ the picture array can be made 2D using 2 square brackets, the first bracket shou
   
   
   
-  Other Status indicators:
+  **Other Status indicators:**
   
-  please see fine40 -128x32.c to see how they are used
+  please see **fine40 -128x32.c** to see how they are used
   
-  this code broke will highlight the modifier word that is currenly pressed
+  this code block will highlight the modifier word that is currenly pressed
   
               void render_mod_status(uint8_t modifiers) {
                //    oled_write_ln_P(PSTR("-----"), false);
@@ -121,7 +125,7 @@ this block of code with highligh a chacter when cap lock, num lock or scroll loc
 
 the ordering you have in oled_task_user(void) function is the order each of the indicators will display, example below, oled_set_cursor(0, X); will force the stats to appear in the line specified (each line take 8 pixels in height so 128x32 and dispay 16 lines total because it is vertical and 128x64 only 8 lines because it is horizontal)
 
-one issue/bug I did encounter is that when doing the animated logo, only 1 line after the logo is displayed, so I currently have render_mochi() as the last function I call or only the first status indicator works
+**one issue/bug I did encounter is that when doing the animated logo, only 1 line after the logo is displayed, so I currently have render_mochi() as the last function I call or only the first status indicator works**
 
 	oled_set_cursor(0, 0); 
     render_layer_status();
