@@ -31,7 +31,7 @@ Enter the bootloader in 3 ways:
 
 * **Simple logo upload**
 
-1.create a black and white image that is 128 pixels wide and less than 64 pixels tall in something like MS paint (white logo on black background looks best) 
+1.create a black and white image that is 128 pixels wide (or 32 pixel wide if you are using 128x32 OLED) and less than 64 pixels tall in something like MS paint (white logo on black background looks best) 
 
 2.Go to https://joric.github.io/qle/ then use upload image funtion and it will generate hex code for each pixel to show new image in OLED
 
