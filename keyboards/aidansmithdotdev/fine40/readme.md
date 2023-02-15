@@ -32,8 +32,11 @@ Enter the bootloader in 3 ways:
 Simple logo upload-
 
 1.create a black and white image that is 128 pixels wide and less than 64 pixels tall in something like MS paint (you can even download from online then just resize the image to 128 pixels) 
+
 2.Go to https://joric.github.io/qle/ then use upload image funtion and it will generate hex code for each pixel to show new image in OLED
+
 3.Open fine40.c and replace the hex code in static const char PROGMEM mochi_logo[] = {... } with new ones from previous step
+
 4.Save the file,compile using QMK MSYS, then flash to your mochi
 
 Explanation of funtions-
