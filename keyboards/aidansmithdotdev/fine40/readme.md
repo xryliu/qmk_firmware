@@ -65,7 +65,8 @@ Variables needed:
         uint32_t anim_timer = 0; <- and this variable helps track time
 
 the picture array can be made 2D using 2 square brackets, the first bracket should say IDLE_FRAMES which specify number of pictures, secound square spefify the number of pixels in each image, yoiu get this number by multipling the width x height of the image (I am using 128x32 in the demo which equals to 4096)
-            mochi_logo[IDLE_FRAMES][4096]= {
+         
+         mochi_logo[IDLE_FRAMES][4096]= {
                 {hex code for picture 1 },
                 {hex code for picture 2 }
                 etc,etc
