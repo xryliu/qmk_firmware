@@ -52,7 +52,7 @@ Enter the bootloader in 3 ways:
 * **More Advance Funtions**
 
 Animating the Logo:
-These are based on code published by pedker (https://github.com/pedker/OLED-BongoCat-Revision) and for demo purpose I am using pedker's bongo cat pictures in fine40.c file 
+These are based on code published by pedker (https://github.com/pedker/OLED-BongoCat-Revision) and for demo purpose I am using pedker's bongo cat pictures in fine40 - animated.c file 
 
 Variables needed: 
 
