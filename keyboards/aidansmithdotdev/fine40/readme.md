@@ -123,7 +123,7 @@ this block of code with highligh a chacter when cap lock, num lock or scroll loc
 
             }
 
-the ordering you have in oled_task_user(void) function is the order each of the indicators will display, example below, oled_set_cursor(0, X); will force the stats to appear in the line specified (each line take 8 pixels in height so 128x32 and dispay 16 lines total because it is vertical and 128x64 only 8 lines because it is horizontal)
+the ordering you have in **oled_task_user(void)** function is the order each of the indicators will display, example below, **oled_set_cursor(0, X);** will force the stats to appear in the line specified (each line take 8 pixels in height so 128x32 and dispay 16 lines total because it is vertical and 128x64 only 8 lines because it is horizontal)
 
 **one issue/bug I did encounter is that when doing the animated logo, only 1 line after the logo is displayed, so I currently have render_mochi() as the last function I call or only the first status indicator works**
 
