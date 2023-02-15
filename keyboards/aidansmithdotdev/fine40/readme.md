@@ -124,12 +124,12 @@ the ordering you have in oled_task_user(void) function is the order each of the 
 one issue/bug I did encounter is that when doing the animated logo, only 1 line after the logo is displaced, so I currently have render_mochi() as the last function I call or only the first status indicator works
 
 	oled_set_cursor(0, 0); 
-render_layer_status();
-oled_set_cursor(0, 1); 
-render_mod_status(get_mods()|get_oneshot_mods());
+    render_layer_status();
+    oled_set_cursor(0, 1); 
+    render_mod_status(get_mods()|get_oneshot_mods());
 
 	//render_keylock_status(host_keyboard_led_state());
-oled_set_cursor(0, 5); 
+    oled_set_cursor(0, 5); 
 	render_mochi();
 	
 
