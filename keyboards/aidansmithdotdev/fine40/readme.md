@@ -55,6 +55,7 @@ Animating the Logo:
 These are based on code published by pedker (https://github.com/pedker/OLED-BongoCat-Revision) and for demo purpose I am using pedker's bongo cat pictures in fine40.c file 
 
 Variables needed: 
+
         #define IDLE_FRAMES 2 <-this variable indicates the total number of frames in your animation, the more you add the bigger the compiled fiel will be
         
         uint8_t current_idle_frame = 0; <-this variable help draw the frames in sequential order
