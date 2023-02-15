@@ -1,7 +1,7 @@
 // Copyright 2022 Aidan Smith (@Aidan-OS)
 // SPDX-License-Identifier: GPL-2.0-or-later
 #include "fine40.h"
-#define IDLE_FRAMES 3
+#define TTL_FRAMES 3
 #define ANIM_FRAME_DURATION 75
 
 
@@ -26,11 +26,11 @@ enum keyboard_layers {
 //    };
 //    oled_write_raw_P(raw_logo, sizeof(raw_logo));
 //}
-uint8_t current_idle_frame = 0;
+uint8_t current_frame = 0;
 uint32_t anim_timer = 0;
 
 	
-	static const char PROGMEM mochi_logo[IDLE_FRAMES][768] = {{
+	static const char PROGMEM mochi_logo[TTL_FRAMES][768] = {{
     0,  0,  0,  0,128,128,  0,128, 64, 64, 32, 32, 24, 12, 24, 32, 32, 96, 64, 64,128,128,128,128,128,  0,  0,  0,  0,  0,  0,  0, 16, 16, 16, 31, 16, 34, 33, 32, 32, 32, 70, 64, 80, 80, 64,128,136,152,240,136,  8, 24,  0, 16,111,192,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  1,  1,  2,  2,  2,  2,  2,  4,  4 
 },
 {
@@ -44,7 +44,7 @@ uint32_t anim_timer = 0;
 
 static void render_mochi(void)
 {	
-	oled_write_raw_P(mochi_logo[current_idle_frame], sizeof(mochi_logo));
+	oled_write_raw_P(mochi_logo[current_frame], sizeof(mochi_logo));
 
 
 
@@ -115,7 +115,7 @@ oled_set_cursor(0, 5);
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
-      current_idle_frame = (current_idle_frame + 1) % IDLE_FRAMES;
+      current_frame = (current_frame + 1) % TTL_FRAMES;
     }
     return true;
   }
