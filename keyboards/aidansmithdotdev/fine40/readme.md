@@ -29,6 +29,22 @@ Enter the bootloader in 3 ways:
 
 ## OLED instructions
 
+**Reduce file size**
+
+adding more images and functions to your OLED will increase the file size, adding LTO:true to the feature section of the info.json file will tell QMK to compress the code more so it can fit on your MCU 
+
+    "features": {
+        "bootmagic": true,
+        "command": false,
+        "console": false,
+        "extrakey": true,
+        "mousekey": false,
+        "encoder": true,
+	    "LTO": true,
+        "oled": true,
+        "nkro": true
+    },
+
 * **Simple logo upload**
 
 1.create a black and white image that is 128 pixels wide (or 32 pixel wide if you are using 128x32 OLED) and less than 64 pixels tall in something like MS paint (white logo on black background looks best) 
